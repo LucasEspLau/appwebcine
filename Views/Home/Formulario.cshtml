@@ -1,0 +1,43 @@
+@model appwebcine.Models.Producto
+@{
+    ViewData["Title"] = "Formulario de Productos";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Formulario de registro de productos</h1>
+    <p>@ViewData["msj"]</p>
+</div>
+
+
+
+<div class="container">
+    <form asp-action="Crear" method="post">
+        <div class="form-group">
+            <label asp-for="Nombre" class="control-label"></label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Precio" class="control-label"></label>
+            <input asp-for="Precio" class="form-control" />
+            <span asp-validation-for="Precio" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ImagenURL" class="control-label"></label>
+            <input asp-for="ImagenURL" class="form-control" />
+            <span asp-validation-for="ImagenURL" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Descripcion" class="control-label"></label>
+            <textarea asp-for="Descripcion" class="form-control"></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
