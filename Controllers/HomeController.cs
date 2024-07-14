@@ -37,10 +37,10 @@ public class HomeController : Controller
         if (ModelState.IsValid)
         {
             // Lógica para guardar el producto en la base de datos
-            ViewData["msj"] = "Producto registrado exitosamente.";
-            return RedirectToAction("Crear");
+            ViewData["msj"] = "Producto registrado exitosamente. "+producto.Nombre;
+            return View("Formulario",producto);
         }
-        return View(producto);
+        return View();
     }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
