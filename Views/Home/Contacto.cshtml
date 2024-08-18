@@ -1,0 +1,94 @@
+
+@if (TempData["MessageCONTACTO"] != null)
+{
+    <div class="alert alert-success" id="MensajesVerdeRojo">
+        @TempData["MessageCONTACTO"]
+    </div>
+}
+@if (TempData["Sentimiento"] != null)
+{
+    <div class="alert alert-success" id="MensajesVerdeRojo">
+
+        @TempData["Sentimiento"]
+    </div>
+}
+
+<form asp-controller="Home" asp-action="Create" method="post" class="contact-form">
+    <h3>Ponerse en Contacto</h3>
+    
+    <div class="form-group">
+        <label for="Nombre">Nombre Completo:</label>
+        <input type="text" id="Nombre" name="Nombre" placeholder="Nombre Completo" class="box" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="Email">Correo Electrónico:</label>
+        <input type="email" id="Email" name="Email" placeholder="Correo electrónico" class="box" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="Phone">Número de Teléfono:</label>
+        <input type="tel" id="Phone" name="Phone" placeholder="Número de Teléfono" class="box" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="Asunto">Asunto:</label>
+        <input type="text" id="Asunto" name="Asunto" placeholder="Asunto" class="box" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="Mensaje">Mensaje:</label>
+        <textarea id="Mensaje" name="Mensaje" placeholder="Mensaje" class="box" rows="10" required></textarea>
+    </div>
+    
+    <div class="form-group">
+        <input type="submit" value="Enviar Mensaje" class="btn">
+    </div>
+</form>
+
+<!-- Agrega los siguientes estilos a tu archivo CSS para mejorar la presentación -->
+<style>
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.box {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+textarea.box {
+    resize: vertical;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+</style>
