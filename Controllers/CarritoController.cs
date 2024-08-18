@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using appwebcine.Data;
 using appwebcine.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace appwebcine.Controllers
 {
@@ -22,7 +24,23 @@ namespace appwebcine.Controllers
                 _context = context;
                 _userManager = userManager;
             }
-
+            public IActionResult Index(){
+                var userID = _userManager.GetUserName(User);
+                if(userID == null){
+                    ViewData["Message"]="Por favor debe loguearse antes de agregar un producto";
+                    return RedirectToAction("Index","Catalogo");
+                }
+                var items = from o in _context.DataProforma select o;
+                items = items.Include(p => p.Producto).
+                        Where(w => w.UserID.Equals(userID) &&
+                            w.Status.Equals("PENDIENTE"));
+                var itemsCarrito = items.ToList();
+                var total = itemsCarrito.Sum(c => c.Cantidad * c.Precio);
+                dynamic model = new ExpandoObject();
+                model.montoTotal = total;
+                model.elementosCarrito = itemsCarrito;
+                return View(model);
+            }
             public async Task<IActionResult> Add(int? id)
             {
                 var userID= _userManager.GetUserName(User);
@@ -46,5 +64,66 @@ namespace appwebcine.Controllers
                 }
 
             }
+            public async Task<IActionResult> Edit(int? id)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var itemCarrito = await _context.DataProforma.FindAsync(id);
+                if (itemCarrito == null)
+                {
+                    return NotFound();
+                }
+                return View(itemCarrito);
+            }       
+
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> Edit(int id, [Bind("Id,Cantidad,Precio,UserID")] Proforma itemCarrito)
+            {
+                if (id != itemCarrito.Id)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(itemCarrito);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!_context.DataProforma.Any(e => e.Id == id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(itemCarrito);
+            }
+
+            public async Task<IActionResult> Delete(int? id)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var itemCarrito = await _context.DataProforma.FindAsync(id);
+                _context.DataProforma.Remove(itemCarrito);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+
     }
 }

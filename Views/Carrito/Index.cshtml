@@ -1,0 +1,51 @@
+@model dynamic
+@using appwebcine.Models
+
+@{
+    ViewData["Title"] = "Carrito de Compras";
+    IEnumerable<Proforma> listItemsCarrito = Model.elementosCarrito;
+    Decimal montoTotal = Model.montoTotal;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mt-5">
+            <h1 class="card-header text-center">@ViewData["Title"]</h1>
+            <div class="card-body">
+                <a class="btn btn-primary mb-3" asp-controller="Pago" asp-action="Create" asp-route-monto="@montoTotal">Pagar</a>
+                <p class="mb-3 text-white">Total S/. @montoTotal</p>
+
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Proforma item in listItemsCarrito)
+                        {
+                            <tr>
+                                <td>@item.Producto.Nombre</td>
+                                <td>@item.Cantidad</td>
+                                <td>@item.Precio.ToString()</td>
+                                <td>@(item.Cantidad * item.Precio)</td>
+                                <td>
+                                    <a class="btn btn-sm btn-info text-white" asp-action="Edit" asp-route-id="@item.Id">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </a>
+                                    <a class="btn btn-sm btn-danger text-white" asp-action="Delete" asp-route-id="@item.Id">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
