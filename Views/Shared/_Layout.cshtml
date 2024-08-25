@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/appwebcine.styles.css" asp-append-version="true" />
 </head>
+@using Microsoft.AspNetCore.Identity
+@using System.Collections.Generic;
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -33,10 +38,17 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Catalogo" asp-action="Index">Peliculas</a>
-                        </li>                        
+                        </li>  
+@if(SignInManager.IsSignedIn(User)){
+    IdentityUser myiden = await UserManager.GetUserAsync(User);
+    var roles = await Task.Run(()=> UserManager.GetRolesAsync(myiden));
+
+    @if(roles.Contains("ADMIN")){
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Carrito" asp-action="Index">Carrito</a>
                         </li>
+                                }}   
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

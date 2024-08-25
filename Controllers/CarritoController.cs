@@ -25,14 +25,14 @@ namespace appwebcine.Controllers
                 _userManager = userManager;
             }
             public IActionResult Index(){
-                var userID = _userManager.GetUserName(User);
-                if(userID == null){
+                var userIDSession = _userManager.GetUserName(User);
+                if(userIDSession == null){
                     ViewData["Message"]="Por favor debe loguearse antes de agregar un producto";
                     return RedirectToAction("Index","Catalogo");
                 }
                 var items = from o in _context.DataProforma select o;
                 items = items.Include(p => p.Producto).
-                        Where(w => w.UserID.Equals(userID) &&
+                        Where(w => w.UserID.Equals(userIDSession) &&
                             w.Status.Equals("PENDIENTE"));
                 var itemsCarrito = items.ToList();
                 var total = itemsCarrito.Sum(c => c.Cantidad * c.Precio);

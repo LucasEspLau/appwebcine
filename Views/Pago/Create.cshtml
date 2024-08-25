@@ -1,0 +1,55 @@
+@model appwebcine.Models.Pago
+@{
+    ViewData["Title"] = "Pago";
+}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+            <form asp-controller="Pago" asp-action="Pagar">
+                <h1 class="text-center">@ViewData["Title"]</h1><br>
+                <div class="form-group row">
+                    <label for="NombreTarjeta" class="col-sm-4 col-form-label">Nombre en la Tarjeta:</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="NombreTarjeta" asp-for="NombreTarjeta" class="form-control" />
+                    </div>
+                </div><br>
+                <div class="form-group row">
+                    <label for="NumeroTarjeta" class="col-sm-4 col-form-label ">Número de Tarjeta:</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="NumeroTarjeta" asp-for="NumeroTarjeta" class="form-control" data-inputmask="'mask': '9999-9999-9999-9999'" />
+                    </div>
+                </div><br>
+                <div class="form-group row">
+                    <label for="DueDateYYMM" class="col-sm-4 col-form-label">Fecha de Vencimiento (YY/MM):</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="DueDateYYMM" asp-for="DueDateYYMM" class="form-control" data-inputmask="'mask': '99/99', 'placeholder': 'yy/mm'" />
+                    </div>
+                </div><br>
+                <div class="form-group row">
+                    <label for="Cvv" class="col-sm-4 col-form-label">CVV:</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="Cvv" asp-for="Cvv" class="form-control" data-inputmask="'mask': '999', 'placeholder': '999'" />
+                    </div>
+                </div><br>
+                <div class="form-group row">
+                    <label for="MontoTotal" class="col-sm-4 col-form-label">Monto Total:</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="MontoTotal" asp-for="MontoTotal" class="form-control" data-thousands="," data-decimal="." />
+                    </div>
+                </div><br>
+                <div class="form-group row">
+                    <label for="UserID" class="col-sm-4 col-form-label">Monto Total:</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="UserID" asp-for="UserID" class="form-control" />
+                    </div>
+                </div><br>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-6" style="text-align: center;">
+                        <button type="submit" class="btn btn-primary btn-block">Pagar</button>
+                    </div>
+                </div>
+            </form>
+            <h3 class="text-center mt-3" style="color: black;">@ViewData["Message"]</h3>
+        </div>
+    </div>
+</div>

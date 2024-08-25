@@ -9,7 +9,7 @@ dotnet new console -o miproyecto
 
 dotnet ef migrations add InitialSetup --context appwebcine.Data.ApplicationDbContext -o "C:\Users\lukae\Documents\Trabajo\ENSEÑAR\Talleres\C#\appwebcine\Data\Migrations"
 
-dotnet ef migrations add ProformaMigracion --context appwebcine.Data.ApplicationDbContext -o "C:\Users\lukae\Documents\Trabajo\ENSEÑAR\Talleres\C#\appwebcine\Data\Migrations"
+dotnet ef migrations add PagoMigracion --context appwebcine.Data.ApplicationDbContext -o "C:\Users\lukae\Documents\Trabajo\ENSEÑAR\Talleres\C#\appwebcine\Data\Migrations"
 
 dotnet ef database update
 
